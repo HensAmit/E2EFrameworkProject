@@ -125,4 +125,12 @@ public class BasePage {
             return null;
         }
     }
+
+    public static void waitByTimeInSeconds (long seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
