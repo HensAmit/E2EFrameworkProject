@@ -1,54 +1,33 @@
 package com.mystore.base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.lang3.StringUtils;
+import com.mystore.driver.Driver;
+import com.mystore.utility.ReadPropertyFile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
-import java.io.FileInputStream;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
-public class BasePage {
-    private Properties properties;
-    private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+public class BasePage extends Driver {
+    private static Properties properties;
 
     @BeforeSuite
-    public void loadConfig() {
-        properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\Configs\\config.properties")) {
-            properties.load(fis);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void loadConfig() {
+        properties = ReadPropertyFile.loadProperties();
     }
 
     @BeforeMethod
     public void launchApp() {
         try {
             String browserName = properties.getProperty("browser");
-            if (StringUtils.equalsIgnoreCase(browserName, "Chrome")) {
-                WebDriverManager.chromedriver().setup();
-                threadLocalDriver.set(new ChromeDriver());
-            } else if (StringUtils.equalsIgnoreCase(browserName, "Firefox")) {
-                WebDriverManager.firefoxdriver().setup();
-                threadLocalDriver.set(new FirefoxDriver());
-            } else if (StringUtils.equalsIgnoreCase(browserName, "Edge")) {
-                WebDriverManager.edgedriver().setup();
-                threadLocalDriver.set(new EdgeDriver());
-            } else {
-                throw new Exception("Browser name is Invalid");
-            }
+            initializeDriver(browserName);
             getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(properties.getProperty("pageLoadTimeOut"))));
             getDriver().get(properties.getProperty("url"));
         } catch (Exception e) {
@@ -56,20 +35,8 @@ public class BasePage {
         }
     }
 
-    public static WebDriver getDriver() {
-        return threadLocalDriver.get();
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        if (getDriver() != null) {
-            getDriver().quit();
-            threadLocalDriver.remove();
-        }
-    }
-
     private static WebElement getElement(By locator) {
-        return new WebDriverWait(getDriver(), Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(properties.getProperty("explicitWaitTime")))).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public static void scrollToElement(By locator) {
@@ -84,6 +51,7 @@ public class BasePage {
     public static void clickElement(By locator) {
         try {
             getElement(locator).click();
+            System.out.println("Clicked on element");
         } catch (Exception e) {
             e.printStackTrace();
         }
