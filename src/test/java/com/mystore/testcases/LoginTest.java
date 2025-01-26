@@ -1,25 +1,23 @@
 package com.mystore.testcases;
 
 import com.mystore.base.BasePage;
-import org.openqa.selenium.By;
+import com.mystore.pages.LoginPage;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BasePage {
-    private static final By ACCOUNT_LINK = By.xpath("//li[contains(@id, 'menu-item')]//a[text()='Account']");
+    private final LoginPage loginPage = new LoginPage();
 
     @Test
     public void testOne () {
         System.out.println("Inside testOne");
-        System.out.println(getTextFromElement(ACCOUNT_LINK));
-        clickElement(ACCOUNT_LINK);
-        waitByTimeInSeconds(10);
+        loginPage.login();
+        waitByTimeInSeconds(20);
     }
 
     @Test
     public void testTwo () {
         System.out.println("Inside testTwo");
-        System.out.println(getTextFromElement(ACCOUNT_LINK));
-        clickElement(ACCOUNT_LINK);
-        waitByTimeInSeconds(10);
+        loginPage.login();
+        waitByTimeInSeconds(20);
     }
 }

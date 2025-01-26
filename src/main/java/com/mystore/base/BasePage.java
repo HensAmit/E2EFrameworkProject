@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.Properties;
 
 public class BasePage extends Driver {
-    private static Properties properties;
+    protected static Properties properties;
 
     @BeforeSuite
     public static void loadConfig() {
