@@ -8,8 +8,10 @@ public class MyStoreImpl extends BasePage {
 
     public void login () {
         try {
+            logger.info("Execution of login() started.");
             loginPage.login();
-            waitByTimeInSeconds(20);
+            waitByTimeInSeconds(5);
+            logger.info("Execution of login() ended.");
         } catch (Exception e) {
             e.printStackTrace();
         }

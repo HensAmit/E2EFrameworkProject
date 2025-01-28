@@ -15,6 +15,9 @@ import java.util.Map;
 public class DataUtils {
     private static final String EXCEL_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\TestData\\TestData.xlsx";
 
+    private DataUtils () {
+    }
+
     public static void readTestDataFromExcelSheet (String testCaseId, String sheetName) {
         try (FileInputStream fis = new FileInputStream(EXCEL_FILE_PATH);
              Workbook workbook = new XSSFWorkbook(fis)) {

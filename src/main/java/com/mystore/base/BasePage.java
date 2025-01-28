@@ -1,7 +1,9 @@
 package com.mystore.base;
 
 import com.mystore.driver.Driver;
+import com.mystore.utility.LogUtil;
 import com.mystore.utility.ReadPropertyFile;
+import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -17,16 +19,19 @@ import java.util.Properties;
 
 public class BasePage extends Driver {
     protected static Properties properties;
+    protected static Logger logger;
 
     @BeforeSuite
     public static void loadConfig() {
         properties = ReadPropertyFile.loadProperties();
+        logger = LogUtil.getLogger();
     }
 
     @BeforeMethod
     public void launchApp() {
         try {
             String browserName = properties.getProperty("browser");
+            logger.info("Initializing driver");
             initializeDriver(browserName);
             getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(properties.getProperty("pageLoadTimeOut"))));
             getDriver().get(properties.getProperty("url"));
@@ -51,7 +56,7 @@ public class BasePage extends Driver {
     public static void clickElement(By locator) {
         try {
             getElement(locator).click();
-            System.out.println("Clicked on element");
+            logger.info("Clicked on element : " + locator.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,6 +64,7 @@ public class BasePage extends Driver {
 
     public static void enterText(By locator, String text) {
         try {
+            logger.info("Entering text : " + text);
             WebElement element = getElement(locator);
             if (element.isDisplayed()) {
                 element.clear();
