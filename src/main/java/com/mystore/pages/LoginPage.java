@@ -1,7 +1,10 @@
 package com.mystore.pages;
 
 import com.mystore.base.BasePage;
+import com.mystore.reportmanager.ExtentReporter;
 import org.openqa.selenium.By;
+
+import static com.mystore.constants.CommonConstants.PASS;
 
 public class LoginPage extends BasePage {
     private static final By ACCOUNT_LINK = By.xpath("//li[contains(@id, 'menu-item')]//a[text()='Account']");
@@ -12,6 +15,7 @@ public class LoginPage extends BasePage {
     public void login () {
         try {
             clickElement(ACCOUNT_LINK);
+            ExtentReporter.report(PASS, "Clicked on Account link");
             enterText(USERNAME_INPUT, properties.getProperty("username"));
             enterText(PASSWORD_INPUT, properties.getProperty("password"));
             clickElement(LOGIN_BUTTON);
