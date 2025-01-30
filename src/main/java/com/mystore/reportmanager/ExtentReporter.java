@@ -1,7 +1,9 @@
 package com.mystore.reportmanager;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.mystore.constants.ReportStatus;
+import com.mystore.utility.ScreenshotUtil;
 
 public final class ExtentReporter {
     private ExtentReporter() {
@@ -15,18 +17,18 @@ public final class ExtentReporter {
                     break;
                 case INFO_WITH_SCREENSHOT:
                     ExtentManager.getTest().log(Status.INFO, details);
-                    takeScreenShot();
+                    ExtentManager.getTest().log(Status.INFO, MediaEntityBuilder.createScreenCaptureFromPath(ScreenshotUtil.getScreenshotPath()).build());
                     break;
                 case PASS:
                     ExtentManager.getTest().log(Status.PASS, details);
-                    takeScreenShot();
+                    ExtentManager.getTest().log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(ScreenshotUtil.getScreenshotPath()).build());
                     break;
                 case PASS_NO_SCREENSHOT:
                     ExtentManager.getTest().log(Status.PASS, details);
                     break;
                 case FAIL:
                     ExtentManager.getTest().log(Status.FAIL, details);
-                    takeScreenShot();
+                    ExtentManager.getTest().log(Status.FAIL, MediaEntityBuilder.createScreenCaptureFromPath(ScreenshotUtil.getScreenshotPath()).build());
                     break;
             }
         } catch (Exception e) {
@@ -36,9 +38,5 @@ public final class ExtentReporter {
 
     public static void fail(Throwable throwable) {
         ExtentManager.getTest().log(Status.FAIL, throwable);
-    }
-
-    static void takeScreenShot() {
-        System.out.println("Taking scshot");
     }
 }
