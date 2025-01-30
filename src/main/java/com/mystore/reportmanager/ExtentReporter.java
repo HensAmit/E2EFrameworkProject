@@ -1,14 +1,13 @@
 package com.mystore.reportmanager;
 
 import com.aventstack.extentreports.Status;
-
-import static com.mystore.constants.CommonConstants.*;
+import com.mystore.constants.ReportStatus;
 
 public final class ExtentReporter {
     private ExtentReporter() {
     }
 
-    public static void report(String status, String details) {
+    public static void report(ReportStatus status, String details) {
         try {
             switch (status) {
                 case INFO:
@@ -38,7 +37,7 @@ public final class ExtentReporter {
     public static void fail(Throwable throwable) {
         ExtentManager.getTest().log(Status.FAIL, throwable);
     }
-    
+
     static void takeScreenShot() {
         System.out.println("Taking scshot");
     }

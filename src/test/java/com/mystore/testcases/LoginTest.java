@@ -1,7 +1,7 @@
 package com.mystore.testcases;
 
 import com.mystore.base.BasePage;
-import static com.mystore.constants.CommonConstants.*;
+import static com.mystore.constants.ReportStatus.*;
 import com.mystore.datamanager.ScenarioData;
 import com.mystore.impl.MyStoreImpl;
 import com.mystore.reportmanager.ExtentReporter;

@@ -4,7 +4,7 @@ import com.mystore.base.BasePage;
 import com.mystore.reportmanager.ExtentReporter;
 import org.openqa.selenium.By;
 
-import static com.mystore.constants.CommonConstants.PASS;
+import static com.mystore.constants.ReportStatus.*;
 
 public class LoginPage extends BasePage {
     private static final By ACCOUNT_LINK = By.xpath("//li[contains(@id, 'menu-item')]//a[text()='Account']");

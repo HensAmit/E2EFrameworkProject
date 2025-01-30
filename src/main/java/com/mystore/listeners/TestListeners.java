@@ -8,7 +8,7 @@ import org.testng.ISuiteListener;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import static com.mystore.constants.CommonConstants.*;
+import static com.mystore.constants.ReportStatus.*;
 
 public class TestListeners implements ISuiteListener, ITestListener {
     @Override

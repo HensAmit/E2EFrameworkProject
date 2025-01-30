@@ -1,7 +1,7 @@
 package com.mystore.impl;
 
 import com.mystore.base.BasePage;
-import static com.mystore.constants.CommonConstants.*;
+import static com.mystore.constants.ReportStatus.*;
 import com.mystore.pages.LoginPage;
 import com.mystore.reportmanager.ExtentReporter;
 
