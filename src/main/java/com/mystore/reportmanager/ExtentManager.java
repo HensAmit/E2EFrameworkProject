@@ -25,7 +25,7 @@ public final class ExtentManager {
         return extent;
     }
 
-    public static ExtentTest getTest() {
+    static ExtentTest getTest() {
         return extentTest.get();
     }
 

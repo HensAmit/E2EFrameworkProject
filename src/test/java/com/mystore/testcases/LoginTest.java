@@ -4,7 +4,6 @@ import com.mystore.base.BasePage;
 import static com.mystore.constants.CommonConstants.*;
 import com.mystore.datamanager.ScenarioData;
 import com.mystore.impl.MyStoreImpl;
-import com.mystore.reportmanager.ExtentManager;
 import com.mystore.reportmanager.ExtentReporter;
 import com.mystore.utility.DataUtils;
 import org.testng.annotations.Test;
