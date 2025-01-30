@@ -4,9 +4,12 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-public class ExtentManager {
+public final class ExtentManager {
     private static ExtentReports extent;
-    private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+    private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+
+    private ExtentManager() {
+    }
 
     public static ExtentReports getExtentReports() {
         if (extent == null) {
