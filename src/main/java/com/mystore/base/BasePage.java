@@ -4,12 +4,8 @@ import com.mystore.driver.Driver;
 import com.mystore.utility.LogUtil;
 import com.mystore.utility.ReadPropertyFile;
 import org.apache.logging.log4j.core.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -38,6 +34,14 @@ public class BasePage extends Driver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void waitUntilDomLoad() {
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(100))
+                .ignoring(WebDriverException.class);
+        wait.until(driver -> ((JavascriptExecutor)getDriver()).executeScript("return document.readyState").toString().equals("complete"));
     }
 
     private static WebElement getElement(By locator) {
@@ -100,7 +104,7 @@ public class BasePage extends Driver {
         }
     }
 
-    public static void waitByTimeInSeconds (long seconds) {
+    public static void waitByTimeInSeconds(long seconds) {
         try {
             Thread.sleep(seconds * 1000);
         } catch (Exception e) {
