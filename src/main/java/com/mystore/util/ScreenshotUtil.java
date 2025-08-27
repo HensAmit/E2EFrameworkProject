@@ -21,8 +21,7 @@ public class ScreenshotUtil {
             }
             screenshotFilePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         } catch (Exception e) {
-            ExtentReporter.report(FAIL, "Failed in getScreenshotPath() method");
-            ExtentReporter.fail(e);
+            ExtentReporter.report(FAIL, "Failed in getScreenshotPath() method", e);
         }
         return screenshotFilePath;
     }

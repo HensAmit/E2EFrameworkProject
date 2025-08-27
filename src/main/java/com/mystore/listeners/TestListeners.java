@@ -3,10 +3,7 @@ package com.mystore.listeners;
 import com.aventstack.extentreports.ExtentTest;
 import com.mystore.reportmanager.ExtentManager;
 import com.mystore.reportmanager.ExtentReporter;
-import org.testng.ISuite;
-import org.testng.ISuiteListener;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 
 import static com.mystore.constants.ReportStatus.*;
 
@@ -35,8 +32,7 @@ public class TestListeners implements ISuiteListener, ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        ExtentReporter.report(FAIL, "Test Failed: " + result.getMethod().getMethodName());
-        ExtentReporter.fail(result.getThrowable());
+        ExtentReporter.report(FAIL, "Test Failed: " + result.getMethod().getMethodName(), result.getThrowable());
     }
 }
 
