@@ -1,14 +1,14 @@
-package com.mystore.utility;
+package com.mystore.util;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ReadPropertyFile {
-    private ReadPropertyFile () {};
+    private ReadPropertyFile () {}
 
     public static Properties loadProperties () {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\Configs\\config.properties")) {
+        try (InputStream fis = ResourceLoader.getResourceAsStream("configs/config.properties")) {
             properties.load(fis);
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,8 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
+import java.io.File;
+
 public final class ExtentManager {
     private static ExtentReports extent;
     private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
@@ -12,15 +14,17 @@ public final class ExtentManager {
     }
 
     public static ExtentReports getExtentReports() {
-        if (extent == null) {
-            String reportPath = System.getProperty("user.dir") + "/reports/ExtentReport.html";
-            ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
-            sparkReporter.config().setReportName("Automation Test Execution Report");
-            sparkReporter.config().setDocumentTitle("Test Report");
-
-            extent = new ExtentReports();
-            extent.attachReporter(sparkReporter);
-            extent.setSystemInfo("Tester", "EMP-981909");
+        try {
+            if (extent == null) {
+                String reportPath = "target/reports/report.html";
+                ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
+                sparkReporter.loadJSONConfig(new File(ExtentManager.class.getClassLoader().getResource("configs/extent-report-config.json").toURI()));
+                extent = new ExtentReports();
+                extent.attachReporter(sparkReporter);
+                extent.setSystemInfo("Tester", "EMP-981909");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return extent;
     }

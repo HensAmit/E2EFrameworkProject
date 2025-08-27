@@ -1,8 +1,8 @@
 package com.mystore.base;
 
 import com.mystore.driver.Driver;
-import com.mystore.utility.LogUtil;
-import com.mystore.utility.ReadPropertyFile;
+import com.mystore.util.ReadPropertyFile;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
@@ -15,12 +15,11 @@ import java.util.Properties;
 
 public class BasePage extends Driver {
     protected static Properties properties;
-    protected static Logger logger;
+    private static final Logger logger = (Logger) LogManager.getLogger(BasePage.class);
 
     @BeforeSuite
     public static void loadConfig() {
         properties = ReadPropertyFile.loadProperties();
-        logger = LogUtil.getLogger();
     }
 
     @BeforeMethod
@@ -60,7 +59,7 @@ public class BasePage extends Driver {
     public static void clickElement(By locator) {
         try {
             getElement(locator).click();
-            logger.info("Clicked on element : " + locator.toString());
+            logger.info("Clicked on element : {}", locator.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +67,7 @@ public class BasePage extends Driver {
 
     public static void enterText(By locator, String text) {
         try {
-            logger.info("Entering text : " + text);
+            logger.info("Entering text : {}", text);
             WebElement element = getElement(locator);
             if (element.isDisplayed()) {
                 element.clear();

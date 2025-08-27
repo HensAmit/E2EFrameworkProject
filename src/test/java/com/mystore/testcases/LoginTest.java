@@ -4,12 +4,18 @@ import com.mystore.base.BasePage;
 import static com.mystore.constants.ReportStatus.*;
 import com.mystore.datamanager.ScenarioData;
 import com.mystore.impl.MyStoreImpl;
+import com.mystore.listeners.TestListeners;
 import com.mystore.reportmanager.ExtentReporter;
-import com.mystore.utility.DataUtils;
+import com.mystore.util.DataUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(TestListeners.class)
 public class LoginTest extends BasePage {
     private final MyStoreImpl myStoreImpl = new MyStoreImpl();
+    private static final Logger logger = (Logger) LogManager.getLogger(LoginTest.class);
 
     @Test
     public void testOne () {
