@@ -29,7 +29,6 @@ public class LoginTest extends BasePage {
         System.out.println(ScenarioData.getData("DataOne"));
         System.out.println(ScenarioData.getData("DataTwo"));
         System.out.println(ScenarioData.getData("DataThree"));
-        Assert.fail("Fail demo");
         ExtentReporter.report(PASS, "testone passed");
     }
 

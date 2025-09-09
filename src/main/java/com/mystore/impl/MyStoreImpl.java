@@ -11,7 +11,7 @@ public class MyStoreImpl extends BasePage {
     private final LoginPage loginPage = new LoginPage();
     private static final Logger logger = (Logger) LogManager.getLogger(MyStoreImpl.class);
 
-    public void login () {
+    public void login() {
         try {
             logger.info("Execution of login() started.");
             loginPage.login();
@@ -19,7 +19,8 @@ public class MyStoreImpl extends BasePage {
             ExtentReporter.report(PASS, "Login successful");
             logger.info("Execution of login() ended.");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in login() : ", e);
+            throw new RuntimeException("Failed in login() : ", e);
         }
     }
 }

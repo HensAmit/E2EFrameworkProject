@@ -36,7 +36,6 @@ public final class ExtentReporter {
                     ExtentManager.getTest().log(Status.PASS, details);
                     break;
                 case FAIL:
-                    logger.error(t[0]);
                     ExtentManager.getTest().log(Status.FAIL, details);
                     ExtentManager.getTest().log(Status.FAIL, t[0]);
                     ExtentManager.getTest().log(Status.FAIL, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtil.getScreenshotPath()).build());
@@ -44,6 +43,7 @@ public final class ExtentReporter {
             }
         } catch (Exception e) {
             logger.error("Failed in report() : {}, {}, {}", status.toString(), details, t);
+            throw new RuntimeException("Failed in report() - ", e);
         }
     }
 }

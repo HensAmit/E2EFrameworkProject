@@ -19,19 +19,23 @@ public class BasePage extends Driver {
 
     @BeforeSuite
     public static void loadConfig() {
+        logger.info("Inside @BeforeSuit");
         properties = ReadPropertyFile.loadProperties();
+        logger.info("Properties loaded");
+        logger.info("Completed @BeforeSuit");
     }
 
     @BeforeMethod
     public void launchApp() {
         try {
             String browserName = properties.getProperty("browser");
-            logger.info("Initializing driver");
+            logger.info("launchApp() - Initializing driver");
             initializeDriver(browserName);
             getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(properties.getProperty("pageLoadTimeOut"))));
             getDriver().get(properties.getProperty("url"));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in launchApp() : ", e);
+            throw new RuntimeException("Failed in launchApp() : ", e);
         }
     }
 
@@ -52,7 +56,8 @@ public class BasePage extends Driver {
             JavascriptExecutor executor = (JavascriptExecutor) getDriver();
             executor.executeScript("arguments[0].scrollIntoView()", getElement(locator));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in launchApp() : ", e);
+            throw new RuntimeException("Failed in launchApp() : ", e);
         }
     }
 
@@ -61,7 +66,8 @@ public class BasePage extends Driver {
             getElement(locator).click();
             logger.info("Clicked on element : {}", locator.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in clickElement() : ", e);
+            throw new RuntimeException("Failed in clickElement() : ", e);
         }
     }
 
@@ -76,7 +82,8 @@ public class BasePage extends Driver {
                 throw new NoSuchElementException("Element not displayed");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in enterText() : ", e);
+            throw new RuntimeException("Failed in enterText() : ", e);
         }
     }
 
@@ -90,7 +97,8 @@ public class BasePage extends Driver {
                 throw new NoSuchElementException("Element not displayed");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in selectOptionFromDropdown() : ", e);
+            throw new RuntimeException("Failed in selectOptionFromDropdown() : ", e);
         }
     }
 
@@ -98,8 +106,8 @@ public class BasePage extends Driver {
         try {
             return getElement(locator).getText();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            logger.error("Failed in getTextFromElement() : ", e);
+            throw new RuntimeException("Failed in getTextFromElement() : ", e);
         }
     }
 
@@ -107,7 +115,8 @@ public class BasePage extends Driver {
         try {
             Thread.sleep(seconds * 1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed in waitByTimeInSeconds() : ", e);
+            throw new RuntimeException("Failed in waitByTimeInSeconds() : ", e);
         }
     }
 }
